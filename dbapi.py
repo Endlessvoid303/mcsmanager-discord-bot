@@ -7,7 +7,8 @@ def connection() -> PooledMySQLConnection | MySQLConnectionAbstract:
         host="192.168.1.151",
         user="mcsmanagerbot",
         password="mcsmanagerbot",
-        database="mcsmanager"
+        database="mcsmanager",
+        ssl_disabled=True
     )
     return  db
 
