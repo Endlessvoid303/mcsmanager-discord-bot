@@ -2,11 +2,14 @@ from mysql.connector.abstracts import MySQLConnectionAbstract
 from mysql.connector.pooling import PooledMySQLConnection
 import mcsapi
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 def connection() -> PooledMySQLConnection | MySQLConnectionAbstract:
     db = mysql.connector.connect(
-        host="192.168.1.151",
-        user="mcsmanagerbot",
-        password="mcsmanagerbot",
+        host=os.getenv("HOST"),
+        user=os.getenv("DBUSER"),
+        password=os.getenv("DBPASSWORD"),
         database="mcsmanager",
         ssl_disabled=True
     )
