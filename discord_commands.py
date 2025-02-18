@@ -142,8 +142,7 @@ def load_commands(tree: app_commands.CommandTree):
 
     @connect_user.autocomplete("uuid")
     async def uuid_autocomplete(interaction, current):
-        db = dbapi.connection()
-        cursor = db.cursor()
+        db,cursor = dbapi.connection()
         sql = "SELECT `UUID` FROM `users`"
         cursor.execute(sql)
         results = cursor.fetchall()
