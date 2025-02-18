@@ -1,11 +1,11 @@
-from mysql.connector.abstracts import MySQLConnectionAbstract
+from mysql.connector.abstracts import MySQLConnectionAbstract, MySQLCursorAbstract
 from mysql.connector.pooling import PooledMySQLConnection
 import mcsapi
 import mysql.connector
 from dotenv import load_dotenv
-
+import os
 load_dotenv()
-def connection() -> PooledMySQLConnection | MySQLConnectionAbstract:
+def connection() -> tuple[PooledMySQLConnection | MySQLConnectionAbstract, MySQLCursorAbstract]:
     db = mysql.connector.connect(
         host=os.getenv("HOST"),
         user=os.getenv("DBUSER"),
@@ -13,7 +13,8 @@ def connection() -> PooledMySQLConnection | MySQLConnectionAbstract:
         database="mcsmanager",
         ssl_disabled=True
     )
-    return  db
+    cursor = db.cursor()
+    return  db,cursor
 
 def update_daemons():
     db = connection()

@@ -60,3 +60,39 @@ def add_user(username:str,password:str,permission:int):
 
 def delete_user(uuid:str):
     return request("/api/auth",{},"delete",[uuid])
+
+def create_server(daemon:str,name:str,ports:list,servertype:str,memory:int,version:str="latest"):
+    env_vars = [
+  "EULA=TRUE",
+  F"MAX_MEMORY={memory}g",
+  "ENABLE_AUTOSTOP=TRUE",
+  "AUTOSTOP_TIMEOUT_EST=300",
+  "AUTOSTOP_TIMEOUT_INIT=600",
+  F"TYPE={servertype}",
+  F"VERSION={version}"
+]
+    data = {
+  "nickname": name,
+  "startCommand": "",
+  "stopCommand": "stop",
+  "cwd": ".",
+  "ie": "utf-8",
+  "oe": "utf-8",
+  "processType": "docker",
+  "type": "minecraft/java",
+  "tag": [],
+  "endTime": "",
+  "docker": {
+    "containerName": "",
+    "image": "itzg/minecraft-server",
+    "ports": ports,
+    "extraVolumes": [],
+    "networkMode": "bridge",
+    "networkAliases": [],
+    "cpusetCpus": "",
+    "maxSpace": 0,
+    "workingDir": "/data/",
+    "env": env_vars
+  }
+}
+    return request("/api/instance",{"daemonId":daemon},"post",data)
