@@ -17,8 +17,7 @@ def connection() -> tuple[PooledMySQLConnection | MySQLConnectionAbstract, MySQL
     return  db,cursor
 
 def update_daemons():
-    db = connection()
-    cursor = db.cursor()
+    db,cursor = dbapi.connection()
     daemons = mcsapi.get_daemon_data()["data"]["remote"]
     for daemon in daemons:
         uuid = daemon['uuid']
@@ -37,12 +36,9 @@ def update_daemons():
             params = [uuid,ip]
             cursor.execute(sql,params)
     db.commit()
-    cursor.close()
-    db.close()
 
 def update_users():
-    db = connection()
-    cursor = db.cursor()
+    db,cursor = dbapi.connection()
     users = mcsapi.get_users(1,100)["data"]["data"]
     for user in users:
         uuid = user['uuid']
@@ -61,5 +57,3 @@ def update_users():
             params = [uuid, name, perms]
             cursor.execute(sql, params)
     db.commit()
-    cursor.close()
-    db.close()
