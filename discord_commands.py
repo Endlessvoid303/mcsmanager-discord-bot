@@ -45,15 +45,24 @@ def load_commands(tree: app_commands.CommandTree):
 
     @tree.command(name="connect-user")
     @owner()
-    async def connect_user(interaction: discord.Interaction, user: str, uuid: str):
-        discorduuid = int(user)
-        actions.connect_discord_user_to_database(discorduuid,uuid)
-        await interaction.response.send_message(
-            embed=discord.Embed(
-                color=color_green,
-                title="✅ discord account connected",
-                description=f"<@{discorduuid}> connected to {uuid}"),
-            ephemeral=True)
+    async def connect_user(interaction: discord.Interaction, user: str, name: str):
+        discord_uuid = int(user)
+        try:
+            actions.connect_discord_user_to_database(discord_uuid, name)
+        except (exceptions.DiscordUuidUsed,exceptions.UserMissing) as e:
+            await interaction.response.send_message(
+                embed=discord.Embed(
+                    color=color_red,
+                    title="❌ failed connecting of user",
+                    description=e.message),
+                ephemeral=True)
+        else:
+            await interaction.response.send_message(
+                embed=discord.Embed(
+                    color=color_green,
+                    title="✅ discord account connected",
+                    description=f"<@{discord_uuid}> connected to {name}"),
+                ephemeral=True)
 
     @tree.command(name="disconnect-user")
     @owner()
