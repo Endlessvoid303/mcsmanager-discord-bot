@@ -67,13 +67,13 @@ def load_commands(tree: app_commands.CommandTree):
     @tree.command(name="disconnect-user")
     @owner()
     async def disconnect_user(interaction: discord.Interaction, user: str):
-        discorduuid = int(user)
-        actions.disconnect_discord_user_from_database(discorduuid)
+        discord_uuid = int(user)
+        actions.disconnect_discord_user_from_database(discord_uuid)
         await interaction.response.send_message(
             embed=discord.Embed(
                 color=color_green,
                 title="✅ discord account disconnected",
-                description=f"<@{discorduuid}> disconnected"),
+                description=f"<@{discord_uuid}> disconnected"),
             ephemeral=True)
 
     @tree.command(name="panel", description="open the panel")
