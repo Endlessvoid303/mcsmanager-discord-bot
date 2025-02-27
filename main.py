@@ -1,20 +1,11 @@
-import json
 import os
-import time
-
-from functools import lru_cache
-from dotenv import load_dotenv
 
 import discord
 from discord import app_commands
-from discord.app_commands import Choice
+from dotenv import load_dotenv
 
-import discord_commands
 import dbapi
-
-color_green = 65313
-color_red = 16711680
-OWNER_ID = 1079043553327583332
+import discord_commands
 
 load_dotenv()
 discordBotToken = os.getenv("TOKEN")
