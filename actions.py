@@ -15,14 +15,10 @@ class NameCache:
             return self.cached_data
 
         # Cache has expired, fetch new data
-        db = dbapi.connection()
-        cursor = db.cursor()
+        db, cursor = dbapi.connection()
         sql = "SELECT `NAME` FROM `users`"
         cursor.execute(sql)
         self.cached_data = cursor.fetchall()
-        cursor.close()
-        db.close()
-
         self.cache_time = time.time()
         return self.cached_data
 
