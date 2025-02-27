@@ -100,7 +100,7 @@ def load_commands(tree: app_commands.CommandTree):
                 embed=discord.Embed(
                     color=color_red,
                     title="❌ failed user deletion",
-                    description=e.generic),
+                    description=e.message),
                 ephemeral=True)
 
 #TODO: move function and add errors
