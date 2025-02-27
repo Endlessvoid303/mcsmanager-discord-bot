@@ -1,3 +1,4 @@
+import time
 import exceptions
 import mcsapi
 import dbapi
@@ -25,7 +26,10 @@ class NameCache:
         self.cache_time = time.time()
         return self.cached_data
 
-namecache = NameCache()
+cache = NameCache()
+
+def get_data():
+    return cache.get_data()
 
 def get_users_info() -> str:
     db,cursor = dbapi.connection()
