@@ -17,7 +17,7 @@ def connection():
         ssl_disabled=True
     )
     cursor = db.cursor()
-    return  db,cursor
+    return db, cursor
 
 def update_daemons():
     db,cursor = dbapi.connection()
