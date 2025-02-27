@@ -1,9 +1,9 @@
-from mysql.connector.abstracts import MySQLConnectionAbstract, MySQLCursorAbstract
-from mysql.connector.pooling import PooledMySQLConnection
 import mcsapi
-import mysql.connector
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+import mysql.connector as connector
+from mysql.connector import errorcode
+
 load_dotenv()
 DB_USER = os.getenv("DB-USER")
 DB_PASS = os.getenv("DB-PASSWORD")
