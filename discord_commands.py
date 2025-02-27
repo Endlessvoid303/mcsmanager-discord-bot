@@ -146,9 +146,7 @@ def load_commands(tree: app_commands.CommandTree):
                     description=f"Failed to create user: {str(response)}"),
                 ephemeral=True)
 
-
-
-    @connect_user.autocomplete("uuid")
+    # noinspection PyUnusedLocal
     async def uuid_autocomplete(interaction, current):
         db,cursor = dbapi.connection()
         sql = "SELECT `UUID` FROM `users`"
