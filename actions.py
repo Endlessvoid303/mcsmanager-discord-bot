@@ -41,13 +41,20 @@ def get_users_info() -> str:
         display += F"\n{user[2]} - <@{user[1]}> - {user[3]}"
     return display
 
-#TODO: check if user exists before changing
-#TODO: check if discorduuid is already set
-#TODO: check if discorduuid is already used somewhere
-def connect_discord_user_to_database(discorduuid:int,uuid:str):
+def connect_discord_user_to_database(discord_uuid:int, name:str):
     db, cursor = dbapi.connection()
-    sql = "UPDATE `users` SET DISCORDUUID = %s WHERE UUID = %s"
-    arguments = [discorduuid, uuid]
+    cursor.execute("SELECT NAME FROM users WHERE DISCORDUUID = %s", (discord_uuid,))
+    result = cursor.fetchone()
+    if result:
+        raise exceptions.DiscordUuidUsed("user can not connect to database because discord uuid is already in use",{"discord_uuid":discord_uuid,"name":name})
+    cursor.execute("SELECT DISCORDUUID FROM users WHERE NAME = %s", (name,))
+    result = cursor.fetchone()
+    if not result:
+        raise exceptions.UserMissing("user can not connect to database because user doesn't exist",{"discord_uuid":discord_uuid,"name":name})
+    if result[0]:
+        raise exceptions.DiscordUuidUsed("user can not connect to database because user already has a discord uuid",{"discord_uuid":discord_uuid,"name":name})
+    sql = "UPDATE users SET DISCORDUUID = %s WHERE NAME = %s"
+    arguments = [discord_uuid, name]
     cursor.execute(sql, arguments)
     db.commit()
 
