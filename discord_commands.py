@@ -28,8 +28,8 @@ def load_commands(tree: app_commands.CommandTree):
             await interaction.response.send_message(
                 embed=discord.Embed(
                     color=color_red,
-                    title="❌ sumting wong",
-                    description="something went wrong ¯\_(ツ)_/¯"),
+                    title="❌ error",
+                    description="something went wrong ¯\\_(ツ)_/¯"),
                 ephemeral=True)
 
     @tree.command(name="get-users", description="get all users")
