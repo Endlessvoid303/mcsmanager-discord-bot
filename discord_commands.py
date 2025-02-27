@@ -1,9 +1,15 @@
+from discord.app_commands import Choice
+
 import actions
 import discord
 from discord import app_commands
 
+import dbapi
+import mcsapi
 import exceptions
-
+color_green = 65313
+color_red = 16711680
+OWNER_ID = 1079043553327583332
 
 def load_commands(tree: app_commands.CommandTree):
     def owner():
