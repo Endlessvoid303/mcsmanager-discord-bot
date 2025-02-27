@@ -41,3 +41,12 @@ class MultipleUsersError(Exception):
         print(F"error: `{message}` with data: `{data}`")
         self.message = message
         self.generic = "multiple users exist"
+
+
+class DiscordUuidUsed(Exception):
+    def __init__(self, message, data=None):
+        if data is None:
+            data = {}
+        print(F"error: `{message}` with data: `{data}`")
+        self.message = message
+        self.generic = "discord uuid was already used"
