@@ -5,12 +5,15 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 load_dotenv()
-def connection() -> tuple[PooledMySQLConnection | MySQLConnectionAbstract, MySQLCursorAbstract]:
-    db = mysql.connector.connect(
+DB_USER = os.getenv("DB-USER")
+DB_PASS = os.getenv("DB-PASSWORD")
+DB_NAME = os.getenv("DB-DATABASE")
+def connection():
+    db = connector.connect(
         host=os.getenv("HOST"),
-        user=os.getenv("DBUSER"),
-        password=os.getenv("DBPASSWORD"),
-        database="mcsmanager",
+        user=DB_USER,
+        password=DB_PASS,
+        database=DB_NAME,
         ssl_disabled=True
     )
     cursor = db.cursor()
