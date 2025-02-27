@@ -54,11 +54,14 @@ def connect_discord_user_to_database(discord_uuid:int, name:str):
     cursor.execute(sql, arguments)
     db.commit()
 
-#TODO: check if discorduuid is connected before disconnecting
-def disconnect_discord_user_from_database(discorduuid:int):
+def disconnect_discord_user_from_database(discord_uuid:int):
     db, cursor = dbapi.connection()
-    sql = "UPDATE `users` SET DISCORDUUID = NULL WHERE DISCORDUUID = %s"
-    arguments = [discorduuid]
+    cursor.execute("SELECT * FROM users WHERE DISCORDUUID = %s", [discord_uuid])
+    result = cursor.fetchone()
+    if result:
+        raise exceptions.UserMissing("user can not be disconnected because discord user is missing",{"discord_uuid":discord_uuid})
+    sql = "UPDATE users SET DISCORDUUID = NULL WHERE DISCORDUUID = %s"
+    arguments = [discord_uuid]
     cursor.execute(sql, arguments)
     db.commit()
 
