@@ -164,7 +164,7 @@ def load_commands(tree: app_commands.CommandTree):
     async def name_autocomplete(interaction, current):
         # Filter users by their display name or username based on the current input
         suggestions = []
-        names = namecache.get_data()
+        names = actions.get_data()
         for name in names:
             if current.lower() in name[0].lower() and len(suggestions) < 25:
                 suggestions.append(Choice(name=name[0], value=name[0]))
