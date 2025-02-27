@@ -96,7 +96,6 @@ def load_commands(tree: app_commands.CommandTree):
                     description=f"deleted user {name} "),
                 ephemeral=True)
         except (exceptions.MultipleUsersError,exceptions.UserMissing) as e:
-            print(F"exception caught: {e.message}")
             await interaction.response.send_message(
                 embed=discord.Embed(
                     color=color_red,
