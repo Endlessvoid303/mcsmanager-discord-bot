@@ -158,6 +158,8 @@ def load_commands(tree: app_commands.CommandTree):
                 suggestions.append(Choice(value=result[0], name=result[0]))
         return suggestions
 
+    # noinspection PyUnusedLocal
+    @connect_user.autocomplete("name")
     @delete_user.autocomplete("name")
     async def name_autocomplete(interaction, current):
         # Filter users by their display name or username based on the current input
