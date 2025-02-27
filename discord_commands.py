@@ -189,15 +189,3 @@ def load_commands(tree: app_commands.CommandTree):
                 suggestions.append(Choice(name=user.display_name, value=str(user.id)))
         # Discord allows a maximum of 25 autocomplete suggestions
         return suggestions
-
-    @start.autocomplete("instance")
-    @stop.autocomplete("instance")
-    @restart.autocomplete("instance")
-    @ip.autocomplete("instance")
-    @remove_instance.autocomplete("instance")
-    async def autocomplete_instance(interaction, current: str):
-        # Suggestions based on the current input
-        suggestions = []
-        # Filter suggestions based on what the user is typing
-        return [discord.app_commands.Choice(name=item, value=item) for item in suggestions if
-                current.lower() in item.lower()]
